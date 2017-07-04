@@ -57,7 +57,7 @@ public class CharacterCtrl2D : MonoBehaviour {
             if (Input.GetButtonDown("X1"))
             {
                 skill_2 = true;
-                gameObject.layer = 11;
+                gameObject.layer = 12;
             }
         }
         
@@ -75,12 +75,16 @@ public class CharacterCtrl2D : MonoBehaviour {
         if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > maxSpeed)
             GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
 
-        if (jump)
-        {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
+        
+
+        
+        if (h > 0 && !facingRight)
             
-            jump = false;
-        }
+            Flip();
+        
+        else if (h < 0 && facingRight)
+            
+            Flip();
     }
 
     void TurnLight()//转动光源!
@@ -108,7 +112,16 @@ public class CharacterCtrl2D : MonoBehaviour {
         if (Input.GetButtonDown("B1"))
             skill_1 = false;
     }
+    void Flip()
+    {
+        
+        facingRight = !facingRight;
 
-    
+        
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
+
 
 }

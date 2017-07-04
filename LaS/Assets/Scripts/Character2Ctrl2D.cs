@@ -10,24 +10,51 @@ public class Character2Ctrl2D : MonoBehaviour {
     public bool jump = false;                //跳跃开关
     [HideInInspector]
     public bool skill_1 = false;             //技能1开关
+    [HideInInspector]
+    public bool blinkmarkon = false;         //传送点判定
 
 
     public float moveForce;
     public float maxSpeed;
     public float jumpForce;
 
+    private GameObject marks;
+    public GameObject blinkmark;
+    private GameObject selectedMark;
+
+    [HideInInspector]
+    public int selectedNum;                //选择阴影编号
+
     // Use this for initialization
     void Start () {
-        
+        selectedMark = GameObject.Find("Mark1");
+        marks = GameObject.Find("BlinkMarks");
+
+        selectedNum = 1;
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if (skill_1)
+        {
+            Blink();
+        }
+        else
+        {
+            Move();
+            if (Input.GetButtonDown("X2") && blinkmarkon)
+            {
+                skill_1 = true;
+                blinkmark.GetComponent<SpriteRenderer>().enabled = true;
+                blinkmark.transform.position = selectedMark.transform.position;
+            }
+                
+        }
+        
     }
     void Move()
     {
-        float h = Input.GetAxis("Horizontal1");
+        float h = Input.GetAxis("Horizontal2");
 
         if (h * GetComponent<Rigidbody2D>().velocity.x < maxSpeed)
             GetComponent<Rigidbody2D>().AddForce(Vector2.right * h * moveForce);
@@ -41,9 +68,50 @@ public class Character2Ctrl2D : MonoBehaviour {
 
             jump = false;
         }
+        if (h > 0 && !facingRight)
+
+            Flip();
+
+        else if (h < 0 && facingRight)
+
+            Flip();
     }
     void Blink()
     {
+        if (Input.GetButtonDown("LB2"))
+        {
+            selectedNum--;
+            if (selectedNum == 0)
+                selectedNum = marks.transform.childCount;
+            selectedMark = GameObject.Find("Mark" + selectedNum);
+            blinkmark.transform.position = selectedMark.transform.position;
+        }
+        if (Input.GetButtonDown("RB2"))
+        {
+            selectedNum++;
+            if (selectedNum == marks.transform.childCount + 1)
+                selectedNum = 1;
+            selectedMark = GameObject.Find("Mark" + selectedNum);
+            blinkmark.transform.position = selectedMark.transform.position;
+        }
+        if (Input.GetButtonDown("X2"))
+        {
+            transform.position = selectedMark.transform.position;
+        }
+        if (Input.GetButtonDown("B2")||!blinkmarkon)
+        {
+            skill_1 = false;
+            blinkmark.GetComponent<SpriteRenderer>().enabled = false;
+        }
+    }
+    void Flip()
+    {
 
+        facingRight = !facingRight;
+
+
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 }

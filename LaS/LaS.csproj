@@ -146,6 +146,7 @@
     <Compile Include="Assets\Collider2D Optimization\EdgeColliderOptimizer.cs" />
     <Compile Include="Assets\Collider2D Optimization\PolygonColliderOptimizer.cs" />
     <Compile Include="Assets\Collider2D Optimization\ShapeOptimizationHelper.cs" />
+    <Compile Include="Assets\Scripts\BlinkMarks.cs" />
     <Compile Include="Assets\Scripts\Character2Ctrl2D.cs" />
     <Compile Include="Assets\Scripts\CharacterCtrl2D.cs" />
     <Compile Include="Assets\Scripts\SticksTest.cs" />
@@ -165,7 +166,6 @@
     <None Include="Assets\2DDL\2DLight\Shaders\occluded.shader" />
     <None Include="Assets\2DDL\2DLight\Shaders\occluder.shader" />
     <None Include="Assets\Collider2D Optimization\readme.txt" />
-    <None Include="Assets\SpriteSharp\Editor\Resources\SpriteSharpPersistentMarker.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
