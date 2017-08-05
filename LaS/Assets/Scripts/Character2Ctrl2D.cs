@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Character2Ctrl2D : MonoBehaviour {
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+public class Character2Ctrl2D : MonoBehaviour
+{
 
     [HideInInspector]
     public bool facingRight = false;         //角色朝向
@@ -13,8 +16,14 @@ public class Character2Ctrl2D : MonoBehaviour {
     [HideInInspector]
     public bool blinkmarkon = false;         //传送点判定
 
+    [HideInInspector]
+    public bool energy = false;
+    public UIBehaviour en;
+    public float damage;
+
 
     public float moveForce;
+
     public float maxSpeed;
     public float jumpForce;
 
@@ -22,19 +31,34 @@ public class Character2Ctrl2D : MonoBehaviour {
     public GameObject blinkmark;
     private GameObject selectedMark;
 
+    private GameObject lights;
+
+
+    [HideInInspector]
+    public bool islighted = false;
+
     [HideInInspector]
     public int selectedNum;                //选择阴影编号
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         selectedMark = GameObject.Find("Mark1");
         marks = GameObject.Find("BlinkMarks");
 
         selectedNum = 1;
+        lights = GameObject.Find("Light");
+        
+
     }
 
     private void FixedUpdate()
     {
+        
+            
+        
+
+
         if (skill_1)
         {
             Blink();
@@ -48,9 +72,9 @@ public class Character2Ctrl2D : MonoBehaviour {
                 blinkmark.GetComponent<SpriteRenderer>().enabled = true;
                 blinkmark.transform.position = selectedMark.transform.position;
             }
-                
+
         }
-        
+
     }
     void Move()
     {
@@ -78,6 +102,7 @@ public class Character2Ctrl2D : MonoBehaviour {
     }
     void Blink()
     {
+        en.GetComponent<Image>().fillAmount -= damage;
         if (Input.GetButtonDown("LB2"))
         {
             selectedNum--;
@@ -98,7 +123,7 @@ public class Character2Ctrl2D : MonoBehaviour {
         {
             transform.position = selectedMark.transform.position;
         }
-        if (Input.GetButtonDown("B2")||!blinkmarkon)
+        if (Input.GetButtonDown("B2") || !blinkmarkon)
         {
             skill_1 = false;
             blinkmark.GetComponent<SpriteRenderer>().enabled = false;
@@ -114,4 +139,10 @@ public class Character2Ctrl2D : MonoBehaviour {
         theScale.x *= -1;
         transform.localScale = theScale;
     }
+
 }
+
+
+
+
+

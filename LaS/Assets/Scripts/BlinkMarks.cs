@@ -1,18 +1,22 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlinkMarks : MonoBehaviour {
+public class BlinkMarks : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -23,3 +27,5 @@ public class BlinkMarks : MonoBehaviour {
         collision.GetComponent<Character2Ctrl2D>().blinkmarkon = false;
     }
 }
+
+
